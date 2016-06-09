@@ -1,5 +1,6 @@
 # Import Labels and Timings in Synfig (Open Source 2D Animation Studio)
 ##  - aka generate Keyframes and Kinetic Typography (artistic subtitles)
+## This fork contains some modifications as described below
 
 A [Synfig](http://synfig.org) plug-in to create time reference and/or artistic kinetic text effects in Synfig, from [Audacity](http://audacity.sourceforge.net/) track labels (aka subtitles) or excel/openoffice data.
 
@@ -64,6 +65,7 @@ Another option is to clone [this repository](https://github.com/berteh/synfig-im
 Requirements: Python (Synfig is a recommended option) - more info on [Synfig Plugins page](http://wiki.synfig.org/wiki/Doc:Plugins#How_to_install_plugins)
 
 ## Configuration
+### Defaults have changed from the original scripts and settings in this version
 
 edit `settings.py` for customisation:
 
@@ -79,11 +81,15 @@ OVERWRITE_KEYFRAMES_WITH_SAME_NAME = False   # set to True to replace keyframe w
 GENERATE_OBJECTS = True     # set to True to generate objects (such as text layers) for each label
 #
 # settings below only matter to object generation. don't bother if GENERATE_OBJECTS is False.
+# I have also created a new template called "appearing-text-2" that is a modified version of the original.
 TEMPLATE_NAME = "appearing-text"  # the name of template you want to use. must be located in templates/ subdirectory, with .xml extension. default is "popping-text"
 SPLIT_WORDS = False			# split each word in a separate object
 WAYPOINT_TYPE = "halt"      # one of: constant, auto, linear, clamped, halt
-RANDOM_ORIGIN = 70          # set to a percentage [0-100] to randomize the object origin in the whole document viewbox (0 will stack them all at [0,0])
-ANIMATION_INTERVAL = 0.5    # interval (before and after the label time) used for (in & out) transition, in seconds. default is 0.5
+# default value for RANDOM_ORIGIN is now set to zero
+RANDOM_ORIGIN = 0          # set to a percentage [0-100] to randomize the object origin in the whole document viewbox (0 will stack them all at [0,0])
+# The animation interval below used to be applied before and after the animation, but I have modified the script so that the
+# interval is now within the start and end times specified by the labels.txt file.
+ANIMATION_INTERVAL = 0.5    # interval used for (in & out) transition, in seconds. default is 0.5
 #
 ```
 
