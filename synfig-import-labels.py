@@ -182,10 +182,10 @@ def process(sifin_filename, labels_filepath, sifout_filename):
                     ox = 0
                     oy = 0
 
-                t1 = max(b,starts[i]-d)
-                t2 = objTimes[j]
-                t3 = ends[i]
-                t4 = min(ends[i]+d,e)
+                t1 = max(b,starts[i])
+                t2 = objTimes[j]+d
+                t3 = ends[i]-d
+                t4 = min(ends[i],e)
 
                 values = {
                     'text':o,
