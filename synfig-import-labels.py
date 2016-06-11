@@ -42,7 +42,7 @@ if script_dir not in sys.path:
 
 
 def frames2sec(fps, secFrame): # convert Synfig "Xs Yf" time notation to <float> in seconds.
-    pattern  = "^((\d+)(s|m))?(\s)?((\d+)(f|s))?(\s)?((\d+)(f))?$"
+    pattern  = "^((\d+)(s|m))?(\s)?((\d+)(f|s))?(\s)?((\d+\.?\d*)(f))?$"
     m = re.match(pattern, secFrame)
     [s1, n1, u1, b1, s2, n2, u2, b2, s3, n3, u3] = m.groups(0)
     if u1 == 's' and u2 == 'f':
