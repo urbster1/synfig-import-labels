@@ -41,21 +41,15 @@ if script_dir not in sys.path:
     sys.path.insert(0, script_dir)
 
 
-def frames2sec(fps, secFrame): # convert Synfig "Xs Yf" time notation to <float> in seconds.
-    pattern  = "^((\d+)(s|m))?(\s)?((\d+)(f|s))?(\s)?((\d+\.?\d*)(f))?$"
-    m = re.match(pattern, secFrame)
-    [s1, n1, u1, b1, s2, n2, u2, b2, s3, n3, u3] = m.groups(0)
-    if u1 == 's' and u2 == 'f':
-        return float(n1) + float(n2)/fps
-    elif u1 == 'm' and u2 == 's':
-        if n3 == 'f':
-            return float(n1) * 60 + float(n2) + float(n3)/fps
-        else:
-            return float(n1) * 60 + float(n2)
-    elif u1 == 'f':
-        return float(n1)/fps
-    else:
-        return 0
+def frames2sec(fps, secFrame): # convert Synfig "Wh Xm Ys Zf" time notation to <float> in seconds.
+    pattern  = "^(?:(\d+)h)?\s?(?:(\d+)m)?\s?(?:(\d+)s)?\s?(?:(\d+)f)?$"
+    match = re.match(pattern, secFrame)
+    [h, m, s, f] = match.groups(0)
+    h2s = float(h)*3600 if h is not None else 0
+    m2s = float(m)*60 if m is not None else 0
+    s2s = float(s) if s is not None else 0
+    f2s = float(f)/fps if f is not None else 0
+    return h2s + m2s + s2s + f2s
 
 def sec2Frames(fps, seconds): # convert <float> seconds to [seconds, <int>seconds, <int>frames]
     ss = int(seconds)
